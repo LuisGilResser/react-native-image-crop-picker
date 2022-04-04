@@ -173,9 +173,9 @@ class PickerModule extends ReactContextBaseJavaModule implements ActivityEventLi
                     //module.deleteRecursive(file);
 
                     File path = module.reactContext.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-                    if (!path.exist()) throw new Exception("Files does not exist");
+                    if (!path.exists()) throw new Exception("Files does not exist");
                     
-                    module.deleteRecursive(file);
+                    module.deleteRecursive(path);
 
                     promise.resolve(null);
                 } catch (Exception ex) {
