@@ -167,10 +167,16 @@ class PickerModule extends ReactContextBaseJavaModule implements ActivityEventLi
             @Override
             public Void call() {
                 try {
-                    File file = new File(module.getTmpDir(activity));
-                    if (!file.exists()) throw new Exception("File does not exist");
+                    //File file = new File(module.getTmpDir(activity));
+                    //if (!file.exists()) throw new Exception("File does not exist");
 
+                    //module.deleteRecursive(file);
+
+                    File path = module.reactContext.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+                    if (!path.exist()) throw new Exception("Files does not exist");
+                    
                     module.deleteRecursive(file);
+
                     promise.resolve(null);
                 } catch (Exception ex) {
                     ex.printStackTrace();
@@ -342,6 +348,10 @@ class PickerModule extends ReactContextBaseJavaModule implements ActivityEventLi
                 cameraIntent.putExtra("android.intent.extras.CAMERA_FACING", 1);
                 cameraIntent.putExtra("android.intent.extras.LENS_FACING_FRONT", 1);
                 cameraIntent.putExtra("android.intent.extra.USE_FRONT_CAMERA", true);
+            } else {
+                cameraIntent.putExtra("android.intent.extras.CAMERA_FACING", 0);
+                cameraIntent.putExtra("android.intent.extras.LENS_FACING_FRONT", 0);
+                cameraIntent.putExtra("android.intent.extra.USE_FRONT_CAMERA", false);
             }
 
             if (cameraIntent.resolveActivity(activity.getPackageManager()) == null) {
