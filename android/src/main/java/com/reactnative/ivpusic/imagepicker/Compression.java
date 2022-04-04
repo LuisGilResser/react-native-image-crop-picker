@@ -69,6 +69,8 @@ class Compression {
         OutputStream os = new BufferedOutputStream(new FileOutputStream(resizeImageFile));
         bitmap.compress(Bitmap.CompressFormat.JPEG, quality, os);
 
+        String path = originalImagePath;
+
         // Don't set unnecessary exif attribute
         if (shouldSetOrientation(originalOrientation)) {
             ExifInterface exif = new ExifInterface(resizeImageFile.getAbsolutePath());
@@ -76,6 +78,9 @@ class Compression {
             exif.saveAttributes();
         }
 
+        File file = new File(path);
+
+        file.delete();
         os.close();
         bitmap.recycle();
 
